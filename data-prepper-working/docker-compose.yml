@@ -1,0 +1,16 @@
+version: '3'
+services:
+  data-prepper:
+    container_name: data-prepper
+    image: opensearchproject/data-prepper:latest
+    volumes:
+      - ${PWD}/pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
+      # - ${PWD}/root-ca.pem:/usr/share/data-prepper/root-ca.pem
+      # - ${PWD}/data-prepper-config.yaml:/usr/share/data-prepper/config/data-prepper-config.yaml
+    ports:
+      - "2021:2021"
+      - "21890:21890"
+    networks:
+      - opensearch-net
+networks:
+  opensearch-net:

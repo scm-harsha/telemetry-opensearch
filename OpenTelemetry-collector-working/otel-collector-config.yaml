@@ -1,0 +1,26 @@
+receivers:
+  jaeger:
+    protocols:
+      grpc:
+  otlp:
+    protocols:
+      grpc:
+  zipkin:
+
+processors:
+  batch/traces:
+    timeout: 1s
+    send_batch_size: 50
+
+exporters:
+  otlp/data-prepper:
+    endpoint: host.docker.internal:21890
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [jaeger, otlp, zipkin]
+      processors: [batch/traces]
+      exporters: [otlp/data-prepper]
